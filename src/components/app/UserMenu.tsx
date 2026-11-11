@@ -2,7 +2,6 @@
 
 import { ChevronsUpDown, Keyboard, LogOut, Monitor, Moon, Settings, Sun } from 'lucide-react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { Popover } from '@/components/ui/Popover'
 import { cn } from '@/lib/cn'
 import { initials, useAuthActions, useMe } from '@/lib/queries'
@@ -18,13 +17,12 @@ export function UserMenu({ collapsed = false }: { collapsed?: boolean }) {
   const { data: user } = useMe()
   const auth = useAuthActions()
   const theme = useUi((s) => s.theme)
-  const router = useRouter()
 
   async function logout(close: () => void) {
     close()
     await auth.logout()
-    router.replace('/login')
-    router.refresh()
+    // Full page load so no cached data of this user survives the sign-out.
+    window.location.replace('/login')
   }
 
   return (

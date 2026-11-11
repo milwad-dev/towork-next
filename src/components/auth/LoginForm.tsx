@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { ErrorAlert } from '@/components/ui/Alert'
 import { FormField } from '@/components/ui/FormField'
@@ -12,7 +12,6 @@ import { useFormErrors } from './useFormErrors'
 
 export function LoginForm() {
   const auth = useAuthActions()
-  const router = useRouter()
   const search = useSearchParams()
   const [form, setForm] = useState({ login: '', password: '' })
   const { errors, error, loading, run } = useFormErrors()
@@ -22,8 +21,8 @@ export function LoginForm() {
     run(async () => {
       await auth.login({ login: form.login.trim(), password: form.password })
       const redirect = search.get('redirect')
-      router.replace(redirect && redirect.startsWith('/') && !redirect.startsWith('//') ? redirect : '/today')
-      router.refresh()
+      // Full page load: the auth cookie just changed, so start with a fresh router cache.
+      window.location.replace(redirect && redirect.startsWith('/') && !redirect.startsWith('//') ? redirect : '/today')
     })
   }
 

@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { ErrorAlert } from '@/components/ui/Alert'
 import { FormField } from '@/components/ui/FormField'
@@ -13,7 +12,6 @@ import { useFormErrors } from './useFormErrors'
 
 export function RegisterForm() {
   const auth = useAuthActions()
-  const router = useRouter()
   const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', password_confirmation: '' })
   const { errors, setErrors, error, loading, run } = useFormErrors()
   const strength = passwordStrength(form.password)
@@ -34,8 +32,8 @@ export function RegisterForm() {
       }
       if (form.phone.trim()) payload.phone = form.phone.trim()
       await auth.register(payload)
-      router.replace('/verify-email?welcome=1')
-      router.refresh()
+      // Full page load: the auth cookie just changed, so start with a fresh router cache.
+      window.location.replace('/verify-email?welcome=1')
     })
   }
 

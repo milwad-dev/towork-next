@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useSyncExternalStore } from 'react'
 import { openQuickAdd, setSidebarCollapsed, uiStore } from '@/lib/ui'
 
 const GO: Record<string, string> = { t: '/today', u: '/upcoming', a: '/tasks', b: '/board', c: '/calendar', d: '/dashboard', s: '/settings' }
@@ -65,6 +65,14 @@ export function useShortcuts() {
   }, [router])
 }
 
+const noopSubscribe = () => () => {}
+const isMacPlatform = () => /Mac|iPhone|iPad/.test(navigator.platform)
+
+/**
+ * Hydration-safe platform check: the server (and the first client render) assume
+ * non-Mac, then React re-renders with the real value. Reading `navigator` directly
+ * during render made the prerendered "Ctrl" mismatch "⌘" on Macs (React error #418).
+ */
 export function useIsMac() {
-  return typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform)
+  return useSyncExternalStore(noopSubscribe, isMacPlatform, () => false)
 }

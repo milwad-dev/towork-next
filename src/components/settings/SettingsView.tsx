@@ -123,9 +123,8 @@ function SettingsBody({ user }: { user: User }) {
     setDeleteError('')
     try {
       await auth.deleteAccount(deleteForm.password)
-      toast('Your account has been deleted.', { type: 'info' })
-      router.replace('/register')
-      router.refresh()
+      // Full page load so no cached data of the deleted account survives.
+      window.location.replace('/register')
     } catch (err) {
       setDeleteError(fieldErrors(err).password || errorMessage(err))
     } finally {

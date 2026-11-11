@@ -57,7 +57,10 @@ export function LoginForm() {
               <label htmlFor={id} className="text-[13px] font-medium text-zinc-700 dark:text-zinc-300">
                 Password
               </label>
-              <Link href="/forgot-password" className="text-[13px] font-medium text-accent-600 hover:text-accent-500 dark:text-accent-400">
+              <Link
+                href="/forgot-password"
+                className="text-[13px] font-medium text-accent-600 hover:text-accent-500 dark:text-accent-400"
+              >
                 Forgot password?
               </Link>
             </div>

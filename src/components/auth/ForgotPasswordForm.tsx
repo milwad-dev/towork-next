@@ -63,22 +63,26 @@ export function ForgotPasswordForm() {
       {step === 'email' && (
         <>
           <h1 className="text-2xl font-semibold tracking-tight">Forgot your password?</h1>
-          <p className="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">Enter your email and we&apos;ll send you a 6-digit code.</p>
+          <p className="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">
+            Enter your email and we&apos;ll send you a 6-digit code.
+          </p>
         </>
       )}
       {step === 'code' && (
         <>
           <h1 className="text-2xl font-semibold tracking-tight">Check your inbox</h1>
           <p className="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">
-            If an account exists for <span className="font-medium text-zinc-700 dark:text-zinc-200">{form.email}</span>, we sent it a code. It
-            expires in 60 minutes.
+            If an account exists for <span className="font-medium text-zinc-700 dark:text-zinc-200">{form.email}</span>,
+            we sent it a code. It expires in 60 minutes.
           </p>
         </>
       )}
       {step === 'password' && (
         <>
           <h1 className="text-2xl font-semibold tracking-tight">Choose a new password</h1>
-          <p className="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">Use at least 8 characters, including letters and numbers.</p>
+          <p className="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">
+            Use at least 8 characters, including letters and numbers.
+          </p>
         </>
       )}
 

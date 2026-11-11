@@ -5,7 +5,8 @@ import { useEffect, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/cn'
 
-const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), textarea, select, [tabindex]:not([tabindex="-1"])'
+const FOCUSABLE =
+  'a[href], button:not([disabled]), input:not([disabled]), textarea, select, [tabindex]:not([tabindex="-1"])'
 
 export function Modal({
   open,
@@ -61,7 +62,9 @@ export function Modal({
     }
     document.addEventListener('keydown', onKey)
     requestAnimationFrame(() => {
-      const auto = panel.current?.querySelector<HTMLElement>('[data-autofocus], input, textarea, button:not([data-close])')
+      const auto = panel.current?.querySelector<HTMLElement>(
+        '[data-autofocus], input, textarea, button:not([data-close])',
+      )
       auto?.focus()
     })
     return () => {

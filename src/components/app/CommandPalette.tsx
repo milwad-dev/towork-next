@@ -87,8 +87,22 @@ function PaletteBody({ onClose }: { onClose: () => void }) {
     const go = (href: string) => () => router.push(href)
     const commands: Item[] = [
       { id: 'new', group: 'Actions', label: 'Create task', icon: Plus, hint: 'N', run: () => openQuickAdd() },
-      { id: 'theme', group: 'Actions', label: `Switch theme (now: ${theme})`, icon: Monitor, run: cycleTheme, keepOpen: true },
-      { id: 'shortcuts', group: 'Actions', label: 'Keyboard shortcuts', icon: Keyboard, hint: '?', run: () => uiStore.set({ shortcutsOpen: true }) },
+      {
+        id: 'theme',
+        group: 'Actions',
+        label: `Switch theme (now: ${theme})`,
+        icon: Monitor,
+        run: cycleTheme,
+        keepOpen: true,
+      },
+      {
+        id: 'shortcuts',
+        group: 'Actions',
+        label: 'Keyboard shortcuts',
+        icon: Keyboard,
+        hint: '?',
+        run: () => uiStore.set({ shortcutsOpen: true }),
+      },
       { id: 'today', group: 'Go to', label: 'Today', icon: Star, run: go('/today') },
       { id: 'upcoming', group: 'Go to', label: 'Upcoming', icon: CalendarRange, run: go('/upcoming') },
       { id: 'all', group: 'Go to', label: 'All tasks', icon: Inbox, run: go('/tasks') },
@@ -104,11 +118,20 @@ function PaletteBody({ onClose }: { onClose: () => void }) {
         iconClass: colorOf(c.color).text,
         run: go(`/categories/${c.id}`),
       })),
-      ...labels.map((l) => ({ id: `l${l.id}`, group: 'Labels', label: l.name, icon: Tag, iconClass: colorOf(l.color).text, run: go(`/labels/${l.id}`) })),
+      ...labels.map((l) => ({
+        id: `l${l.id}`,
+        group: 'Labels',
+        label: l.name,
+        icon: Tag,
+        iconClass: colorOf(l.color).text,
+        run: go(`/labels/${l.id}`),
+      })),
     ]
 
     const q = query.trim().toLowerCase()
-    const cmds = q ? commands.filter((c) => c.label.toLowerCase().includes(q)) : commands.filter((c) => c.group !== 'Labels')
+    const cmds = q
+      ? commands.filter((c) => c.label.toLowerCase().includes(q))
+      : commands.filter((c) => c.group !== 'Labels')
     const taskItems: Item[] = (q ? results : []).map((t) => ({
       id: `t${t.id}`,
       group: 'Tasks',
@@ -160,7 +183,9 @@ function PaletteBody({ onClose }: { onClose: () => void }) {
     if (!n) return
     const next = (active + delta + n) % n
     setActive(next)
-    requestAnimationFrame(() => listRef.current?.querySelector(`[data-index="${next}"]`)?.scrollIntoView({ block: 'nearest' }))
+    requestAnimationFrame(() =>
+      listRef.current?.querySelector(`[data-index="${next}"]`)?.scrollIntoView({ block: 'nearest' }),
+    )
   }
 
   return (
@@ -200,10 +225,17 @@ function PaletteBody({ onClose }: { onClose: () => void }) {
         {searching && <Spinner className="size-4 text-zinc-400" />}
         <kbd className="kbd">Esc</kbd>
       </div>
-      <div id="palette-list" ref={listRef} role="listbox" className="scrollbar-thin max-h-[min(26rem,60vh)] overflow-y-auto p-2">
+      <div
+        id="palette-list"
+        ref={listRef}
+        role="listbox"
+        className="scrollbar-thin max-h-[min(26rem,60vh)] overflow-y-auto p-2"
+      >
         {groups.map((g) => (
           <div key={g.name} className="mb-1">
-            <p className="px-2.5 pt-2 pb-1 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">{g.name}</p>
+            <p className="px-2.5 pt-2 pb-1 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
+              {g.name}
+            </p>
             {g.items.map((item) => (
               <button
                 key={item.id}

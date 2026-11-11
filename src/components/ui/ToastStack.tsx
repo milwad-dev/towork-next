@@ -9,7 +9,11 @@ const tones = { success: 'text-green-400', error: 'text-red-400', info: 'text-sk
 export function ToastStack() {
   const toasts = useUi((s) => s.toasts)
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-20 z-[80] flex flex-col items-center gap-2 px-4 md:bottom-6" aria-live="polite" role="status">
+    <div
+      className="pointer-events-none fixed inset-x-0 bottom-20 z-[80] flex flex-col items-center gap-2 px-4 md:bottom-6"
+      aria-live="polite"
+      role="status"
+    >
       {toasts.map((t) => {
         const Icon = icons[t.type]
         return (
@@ -31,7 +35,12 @@ export function ToastStack() {
                 {t.action.label}
               </button>
             )}
-            <button type="button" className="rounded-md p-1 text-zinc-400 hover:bg-white/10 hover:text-zinc-100" aria-label="Dismiss" onClick={() => dismissToast(t.id)}>
+            <button
+              type="button"
+              className="rounded-md p-1 text-zinc-400 hover:bg-white/10 hover:text-zinc-100"
+              aria-label="Dismiss"
+              onClick={() => dismissToast(t.id)}
+            >
               <X className="size-3.5" />
             </button>
           </div>

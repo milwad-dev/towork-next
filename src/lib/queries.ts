@@ -1,12 +1,6 @@
 'use client'
 
-import {
-  useInfiniteQuery,
-  useQuery,
-  useQueryClient,
-  type InfiniteData,
-  type QueryClient,
-} from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery, useQueryClient, type InfiniteData, type QueryClient } from '@tanstack/react-query'
 import { api } from './api'
 import { matchesParams, normalizeParams } from './taskQuery'
 import type { Category, Label, Paginated, Stats, Subtask, Task, TaskInput, TaskParams, TaskStatus, User } from './types'

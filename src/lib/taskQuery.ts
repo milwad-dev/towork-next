@@ -2,8 +2,7 @@ import { addDays } from 'date-fns'
 import { parseDate, todayISO, toISODate } from './dates'
 import type { Task, TaskParams } from './types'
 
-const list = (v: unknown): string[] =>
-  (Array.isArray(v) ? v.map(String) : String(v ?? '').split(',')).filter(Boolean)
+const list = (v: unknown): string[] => (Array.isArray(v) ? v.map(String) : String(v ?? '').split(',')).filter(Boolean)
 
 /** Client-side check that mirrors the API filters, used for optimistic inserts. */
 export function matchesParams(task: Task, params: TaskParams = {}, today = todayISO()): boolean {

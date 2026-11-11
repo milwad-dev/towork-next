@@ -146,4 +146,3 @@ export function resolveConfirm(value: boolean) {
   confirmResolver?.(value)
   confirmResolver = null
 }
-

@@ -71,7 +71,14 @@ export async function request<T = unknown>(method: string, path: string, options
 
   let res: Response
   try {
-    res = await fetch(url, { method, headers, body, signal: options.signal, credentials: 'same-origin', cache: 'no-store' })
+    res = await fetch(url, {
+      method,
+      headers,
+      body,
+      signal: options.signal,
+      credentials: 'same-origin',
+      cache: 'no-store',
+    })
   } catch (e) {
     if ((e as Error).name === 'AbortError') throw e
     throw new ApiError(0, null, "Can't reach the server. Check your connection.")
@@ -90,7 +97,8 @@ export async function request<T = unknown>(method: string, path: string, options
 export const api = {
   get: <T>(path: string, query?: Query, opts?: Omit<RequestOptions, 'query' | 'body'>) =>
     request<T>('GET', path, { ...opts, query }),
-  post: <T>(path: string, body?: unknown, opts?: Omit<RequestOptions, 'body'>) => request<T>('POST', path, { ...opts, body }),
+  post: <T>(path: string, body?: unknown, opts?: Omit<RequestOptions, 'body'>) =>
+    request<T>('POST', path, { ...opts, body }),
   put: <T>(path: string, body?: unknown) => request<T>('PUT', path, { body }),
   patch: <T>(path: string, body?: unknown) => request<T>('PATCH', path, { body }),
   delete: <T>(path: string, body?: unknown) => request<T>('DELETE', path, { body }),

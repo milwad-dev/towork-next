@@ -65,7 +65,9 @@ describe('query helpers', () => {
   })
 
   it('serializes query strings with comma lists', () => {
-    expect(toSearchParams({ status: ['todo', 'done'], page: 2, search: '', x: undefined })).toBe('?status=todo%2Cdone&page=2')
+    expect(toSearchParams({ status: ['todo', 'done'], page: 2, search: '', x: undefined })).toBe(
+      '?status=todo%2Cdone&page=2',
+    )
     expect(toSearchParams({})).toBe('')
   })
 })

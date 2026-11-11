@@ -9,7 +9,15 @@ import { COLOR_KEYS, colorOf } from '@/lib/constants'
 import { useCollectionMutations, useLabels } from '@/lib/queries'
 import { toast } from '@/lib/ui'
 
-export function LabelPicker({ value, onChange, compact = false }: { value: number[]; onChange: (ids: number[]) => void; compact?: boolean }) {
+export function LabelPicker({
+  value,
+  onChange,
+  compact = false,
+}: {
+  value: number[]
+  onChange: (ids: number[]) => void
+  compact?: boolean
+}) {
   const { data: labels = [] } = useLabels()
   const mutations = useCollectionMutations('labels')
   const [query, setQuery] = useState('')
@@ -41,7 +49,9 @@ export function LabelPicker({ value, onChange, compact = false }: { value: numbe
           type="button"
           className={cn(
             'btn btn-sm max-w-52 border font-normal hover:bg-zinc-100 dark:hover:bg-zinc-800',
-            selected.length ? 'border-zinc-200 dark:border-zinc-700' : 'border-dashed border-zinc-300 text-zinc-500 dark:border-zinc-700',
+            selected.length
+              ? 'border-zinc-200 dark:border-zinc-700'
+              : 'border-dashed border-zinc-300 text-zinc-500 dark:border-zinc-700',
             open && 'bg-zinc-100 dark:bg-zinc-800',
           )}
           aria-expanded={open}
@@ -49,7 +59,11 @@ export function LabelPicker({ value, onChange, compact = false }: { value: numbe
           onClick={toggleOpen}
         >
           <Tag className="size-3.5" />
-          {selected.length ? <span className="truncate">{selected.map((l) => l.name).join(', ')}</span> : !compact && <span>Labels</span>}
+          {selected.length ? (
+            <span className="truncate">{selected.map((l) => l.name).join(', ')}</span>
+          ) : (
+            !compact && <span>Labels</span>
+          )}
         </button>
       )}
     >
@@ -90,7 +104,9 @@ export function LabelPicker({ value, onChange, compact = false }: { value: numbe
                 <Plus className="size-4" /> Create “{query.trim()}”
               </button>
             )}
-            {!filtered.length && !canCreate && <p className="px-2.5 py-2 text-xs text-zinc-500">Type to create your first label.</p>}
+            {!filtered.length && !canCreate && (
+              <p className="px-2.5 py-2 text-xs text-zinc-500">Type to create your first label.</p>
+            )}
           </div>
         </>
       )}

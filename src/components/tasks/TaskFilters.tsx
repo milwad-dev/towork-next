@@ -48,7 +48,8 @@ const GROUPS: { value: Filters['group']; label: string }[] = [
 ]
 
 const chipOn = 'border-accent-500 bg-accent-500/10 text-accent-700 dark:text-accent-300'
-const chipOff = 'border-zinc-200 text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800'
+const chipOff =
+  'border-zinc-200 text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800'
 const sectionTitle = 'mb-1.5 block text-[11px] font-semibold tracking-wider text-zinc-400 uppercase'
 
 export function clearedFilters(f: Filters, hideCategory: boolean, hideLabel: boolean): Filters {
@@ -97,7 +98,13 @@ export function TaskFilters({
       <label className="relative min-w-0 flex-1 basis-48">
         <span className="sr-only">Search tasks</span>
         <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-zinc-400" />
-        <input value={value.search} type="search" className="input h-9 pl-9 text-[13px]" placeholder="Search tasks…" onChange={(e) => set('search', e.target.value)} />
+        <input
+          value={value.search}
+          type="search"
+          className="input h-9 pl-9 text-[13px]"
+          placeholder="Search tasks…"
+          onChange={(e) => set('search', e.target.value)}
+        />
       </label>
 
       <Popover
@@ -106,7 +113,11 @@ export function TaskFilters({
         trigger={({ toggle, open }) => (
           <button type="button" className="btn btn-secondary btn-sm h-9" aria-expanded={open} onClick={toggle}>
             <ListFilter className="size-4" /> Filter
-            {!!activeCount && <span className="flex size-5 items-center justify-center rounded-full bg-accent-600 text-[11px] text-white">{activeCount}</span>}
+            {!!activeCount && (
+              <span className="flex size-5 items-center justify-center rounded-full bg-accent-600 text-[11px] text-white">
+                {activeCount}
+              </span>
+            )}
           </button>
         )}
       >
@@ -148,7 +159,12 @@ export function TaskFilters({
               <label className={sectionTitle} htmlFor="f-due">
                 Due
               </label>
-              <select id="f-due" className="input h-8 text-[13px]" value={value.due} onChange={(e) => set('due', e.target.value as Filters['due'])}>
+              <select
+                id="f-due"
+                className="input h-8 text-[13px]"
+                value={value.due}
+                onChange={(e) => set('due', e.target.value as Filters['due'])}
+              >
                 {DUE.map((d) => (
                   <option key={d.value} value={d.value}>
                     {d.label}
@@ -161,7 +177,12 @@ export function TaskFilters({
                 <label className={sectionTitle} htmlFor="f-cat">
                   Category
                 </label>
-                <select id="f-cat" className="input h-8 text-[13px]" value={value.category_id} onChange={(e) => set('category_id', e.target.value)}>
+                <select
+                  id="f-cat"
+                  className="input h-8 text-[13px]"
+                  value={value.category_id}
+                  onChange={(e) => set('category_id', e.target.value)}
+                >
                   <option value="">Any category</option>
                   <option value="none">No category</option>
                   {categories.map((c) => (
@@ -179,7 +200,12 @@ export function TaskFilters({
                   {labels.map((l) => {
                     const on = value.label_id === String(l.id)
                     return (
-                      <button key={l.id} type="button" className={cn('chip h-7 rounded-full border px-2', on ? chipOn : chipOff)} onClick={() => set('label_id', on ? '' : String(l.id))}>
+                      <button
+                        key={l.id}
+                        type="button"
+                        className={cn('chip h-7 rounded-full border px-2', on ? chipOn : chipOff)}
+                        onClick={() => set('label_id', on ? '' : String(l.id))}
+                      >
                         <span className={cn('size-1.5 rounded-full', colorOf(l.color).dot)} /> {l.name}
                       </button>
                     )
@@ -188,7 +214,11 @@ export function TaskFilters({
               </section>
             )}
             {!!activeCount && (
-              <button type="button" className="btn btn-ghost btn-sm w-full" onClick={() => onChange(clearedFilters(value, hideCategory, hideLabel))}>
+              <button
+                type="button"
+                className="btn btn-ghost btn-sm w-full"
+                onClick={() => onChange(clearedFilters(value, hideCategory, hideLabel))}
+              >
                 <X className="size-3.5" /> Clear filters
               </button>
             )}
@@ -200,22 +230,36 @@ export function TaskFilters({
         width="w-56"
         align="end"
         trigger={({ toggle, open }) => (
-          <button type="button" className="btn btn-secondary btn-sm h-9" aria-expanded={open} aria-label="Sort and group" onClick={toggle}>
-            {value.direction === 'desc' ? <ArrowDownWideNarrow className="size-4" /> : <ArrowUpNarrowWide className="size-4" />}
+          <button
+            type="button"
+            className="btn btn-secondary btn-sm h-9"
+            aria-expanded={open}
+            aria-label="Sort and group"
+            onClick={toggle}
+          >
+            {value.direction === 'desc' ? (
+              <ArrowDownWideNarrow className="size-4" />
+            ) : (
+              <ArrowUpNarrowWide className="size-4" />
+            )}
             <span className="max-sm:hidden">{SORTS.find((s) => s.value === value.sort)?.label}</span>
           </button>
         )}
       >
         {() => (
           <>
-            <p className="px-2.5 pt-1.5 pb-1 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">Sort by</p>
+            <p className="px-2.5 pt-1.5 pb-1 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
+              Sort by
+            </p>
             {SORTS.map((s) => (
               <button
                 key={s.value}
                 type="button"
                 className="menu-item"
                 data-active={value.sort === s.value}
-                onClick={() => onChange({ ...value, sort: s.value, direction: s.value === 'created_at' ? 'desc' : 'asc' })}
+                onClick={() =>
+                  onChange({ ...value, sort: s.value, direction: s.value === 'created_at' ? 'desc' : 'asc' })
+                }
               >
                 {s.label} {value.sort === s.value && <Check className="ml-auto size-4 text-accent-500" />}
               </button>
@@ -225,16 +269,27 @@ export function TaskFilters({
                 <button
                   key={d}
                   type="button"
-                  className={cn('rounded-md py-1 text-xs font-medium', value.direction === d ? 'bg-white shadow-soft dark:bg-zinc-700' : 'text-zinc-500')}
+                  className={cn(
+                    'rounded-md py-1 text-xs font-medium',
+                    value.direction === d ? 'bg-white shadow-soft dark:bg-zinc-700' : 'text-zinc-500',
+                  )}
                   onClick={() => set('direction', d)}
                 >
                   {d === 'asc' ? 'Ascending' : 'Descending'}
                 </button>
               ))}
             </div>
-            <p className="px-2.5 pt-2 pb-1 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">Group by</p>
+            <p className="px-2.5 pt-2 pb-1 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
+              Group by
+            </p>
             {GROUPS.map((g) => (
-              <button key={g.value} type="button" className="menu-item" data-active={value.group === g.value} onClick={() => set('group', g.value)}>
+              <button
+                key={g.value}
+                type="button"
+                className="menu-item"
+                data-active={value.group === g.value}
+                onClick={() => set('group', g.value)}
+              >
                 {g.label} {value.group === g.value && <Check className="ml-auto size-4 text-accent-500" />}
               </button>
             ))}

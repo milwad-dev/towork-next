@@ -28,7 +28,10 @@ export function TaskDrawer() {
 
   return createPortal(
     <>
-      <div className="fixed inset-0 z-40 animate-fade-in bg-zinc-950/20 backdrop-blur-[1px] lg:bg-transparent lg:backdrop-blur-none dark:bg-black/40" onClick={closeTask} />
+      <div
+        className="fixed inset-0 z-40 animate-fade-in bg-zinc-950/20 backdrop-blur-[1px] lg:bg-transparent lg:backdrop-blur-none dark:bg-black/40"
+        onClick={closeTask}
+      />
       <aside
         role="dialog"
         aria-modal="false"
@@ -112,7 +115,12 @@ function DrawerContent({ id }: { id: number }) {
         {task && (
           <button
             type="button"
-            className={cn('btn btn-sm', task.status === 'done' ? 'bg-green-500/10 text-green-700 hover:bg-green-500/15 dark:text-green-400' : 'btn-secondary')}
+            className={cn(
+              'btn btn-sm',
+              task.status === 'done'
+                ? 'bg-green-500/10 text-green-700 hover:bg-green-500/15 dark:text-green-400'
+                : 'btn-secondary',
+            )}
             onClick={() => actions.toggle(task)}
           >
             <Check className="size-3.5" /> {task.status === 'done' ? 'Completed' : 'Mark complete'}
@@ -221,7 +229,9 @@ function DrawerContent({ id }: { id: number }) {
                   date={task.due_date}
                   time={task.due_time}
                   withTime
-                  onChange={(due_date, due_time) => change(due_date === task.due_date ? { due_time } : { due_date, due_time })}
+                  onChange={(due_date, due_time) =>
+                    change(due_date === task.due_date ? { due_time } : { due_date, due_time })
+                  }
                 />
               </dd>
 
@@ -253,7 +263,13 @@ function DrawerContent({ id }: { id: number }) {
                   onChange={(e) => change({ remind_at: fromLocalInput(e.target.value) })}
                 />
                 {task.remind_at && (
-                  <button type="button" className="btn-icon" aria-label="Remove reminder" title="Remove reminder" onClick={() => change({ remind_at: null })}>
+                  <button
+                    type="button"
+                    className="btn-icon"
+                    aria-label="Remove reminder"
+                    title="Remove reminder"
+                    onClick={() => change({ remind_at: null })}
+                  >
                     <BellOff className="size-4" />
                   </button>
                 )}
@@ -282,7 +298,8 @@ function DrawerContent({ id }: { id: number }) {
           <footer className="flex shrink-0 items-center gap-1.5 border-t border-zinc-100 px-6 py-3 text-xs text-zinc-400 dark:border-zinc-800">
             <Clock className="size-3.5" />
             Created {formatDistanceToNow(new Date(task.created_at), { addSuffix: true })}
-            {task.completed_at && ` · Completed ${formatDistanceToNow(new Date(task.completed_at), { addSuffix: true })}`}
+            {task.completed_at &&
+              ` · Completed ${formatDistanceToNow(new Date(task.completed_at), { addSuffix: true })}`}
             {isFetching && (
               <span className="ml-auto">
                 <Spinner />
@@ -344,14 +361,23 @@ function Subtasks({ task }: { task: Task }) {
         </h3>
         {!!list.length && (
           <div className="h-1.5 w-28 overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
-            <div className="h-full rounded-full bg-green-500 transition-all duration-500" style={{ width: `${progress}%` }} />
+            <div
+              className="h-full rounded-full bg-green-500 transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            />
           </div>
         )}
       </div>
       <ul className="space-y-0.5">
         {list.map((sub) => (
-          <li key={sub.id} className="group/sub flex items-center gap-2.5 rounded-lg px-2 py-1.5 hover:bg-zinc-50 dark:hover:bg-zinc-800/60">
-            <GripVertical className="size-3.5 text-zinc-300 opacity-0 group-hover/sub:opacity-100 dark:text-zinc-600" aria-hidden="true" />
+          <li
+            key={sub.id}
+            className="group/sub flex items-center gap-2.5 rounded-lg px-2 py-1.5 hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
+          >
+            <GripVertical
+              className="size-3.5 text-zinc-300 opacity-0 group-hover/sub:opacity-100 dark:text-zinc-600"
+              aria-hidden="true"
+            />
             <TaskCheckbox
               checked={sub.is_completed}
               label="Complete subtask"
@@ -378,7 +404,10 @@ function Subtasks({ task }: { task: Task }) {
             ) : (
               <button
                 type="button"
-                className={cn('min-w-0 flex-1 truncate text-left text-[13px]', sub.is_completed && 'text-zinc-400 line-through')}
+                className={cn(
+                  'min-w-0 flex-1 truncate text-left text-[13px]',
+                  sub.is_completed && 'text-zinc-400 line-through',
+                )}
                 title="Click to rename"
                 onClick={() => setEditing(sub.id)}
               >

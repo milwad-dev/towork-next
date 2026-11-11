@@ -75,10 +75,38 @@ export function DashboardView() {
 function Dashboard({ stats }: { stats: Stats }) {
   const t = stats.totals
   const cards = [
-    { label: 'Open tasks', value: t.todo + t.in_progress, sub: `${t.in_progress} in progress`, icon: CircleDashed, tone: 'text-accent-600 bg-accent-500/10 dark:text-accent-400', href: '/tasks' },
-    { label: 'Due today', value: t.due_today, sub: `${t.upcoming} upcoming`, icon: Sun, tone: 'text-green-600 bg-green-500/10 dark:text-green-400', href: '/today' },
-    { label: 'Overdue', value: t.overdue, sub: t.overdue ? 'Needs attention' : 'Nothing late', icon: AlarmClock, tone: 'text-red-600 bg-red-500/10 dark:text-red-400', href: '/today' },
-    { label: 'Completed', value: t.done, sub: `of ${t.all} total`, icon: CircleCheckBig, tone: 'text-violet-600 bg-violet-500/10 dark:text-violet-400', href: '/tasks' },
+    {
+      label: 'Open tasks',
+      value: t.todo + t.in_progress,
+      sub: `${t.in_progress} in progress`,
+      icon: CircleDashed,
+      tone: 'text-accent-600 bg-accent-500/10 dark:text-accent-400',
+      href: '/tasks',
+    },
+    {
+      label: 'Due today',
+      value: t.due_today,
+      sub: `${t.upcoming} upcoming`,
+      icon: Sun,
+      tone: 'text-green-600 bg-green-500/10 dark:text-green-400',
+      href: '/today',
+    },
+    {
+      label: 'Overdue',
+      value: t.overdue,
+      sub: t.overdue ? 'Needs attention' : 'Nothing late',
+      icon: AlarmClock,
+      tone: 'text-red-600 bg-red-500/10 dark:text-red-400',
+      href: '/today',
+    },
+    {
+      label: 'Completed',
+      value: t.done,
+      sub: `of ${t.all} total`,
+      icon: CircleCheckBig,
+      tone: 'text-violet-600 bg-violet-500/10 dark:text-violet-400',
+      href: '/tasks',
+    },
   ]
   const priorityTotal = Object.values(stats.by_priority).reduce((s, n) => s + n, 0)
   const R = 42
@@ -88,7 +116,11 @@ function Dashboard({ stats }: { stats: Stats }) {
     <>
       <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {cards.map((c) => (
-          <Link key={c.label} href={c.href} className="card group p-4 transition hover:-translate-y-0.5 hover:shadow-md sm:p-5">
+          <Link
+            key={c.label}
+            href={c.href}
+            className="card group p-4 transition hover:-translate-y-0.5 hover:shadow-md sm:p-5"
+          >
             <div className="flex items-center justify-between">
               <span className="text-[13px] font-medium text-zinc-500 dark:text-zinc-400">{c.label}</span>
               <span className={cn('flex size-8 items-center justify-center rounded-lg', c.tone)}>
@@ -118,7 +150,14 @@ function Dashboard({ stats }: { stats: Stats }) {
                     <stop offset="1" stopColor="#a855f7" />
                   </linearGradient>
                 </defs>
-                <circle cx="50" cy="50" r={R} fill="none" strokeWidth="9" className="stroke-zinc-100 dark:stroke-zinc-800" />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r={R}
+                  fill="none"
+                  strokeWidth="9"
+                  className="stroke-zinc-100 dark:stroke-zinc-800"
+                />
                 <circle
                   cx="50"
                   cy="50"
@@ -144,7 +183,9 @@ function Dashboard({ stats }: { stats: Stats }) {
             </span>
             <div>
               <p className="text-[13px] font-semibold">{stats.streak}-day streak</p>
-              <p className="text-xs text-zinc-500">{stats.streak ? 'Keep it going. Finish a task today.' : 'Complete a task to start a streak.'}</p>
+              <p className="text-xs text-zinc-500">
+                {stats.streak ? 'Keep it going. Finish a task today.' : 'Complete a task to start a streak.'}
+              </p>
             </div>
           </div>
         </section>
@@ -155,7 +196,9 @@ function Dashboard({ stats }: { stats: Stats }) {
             Categories
           </h2>
           {!stats.by_category.length && (
-            <p className="mt-4 text-[13px] text-zinc-500">No categories yet. Create one from the sidebar to group related tasks.</p>
+            <p className="mt-4 text-[13px] text-zinc-500">
+              No categories yet. Create one from the sidebar to group related tasks.
+            </p>
           )}
           <ul className="mt-4 grid gap-x-8 gap-y-4 sm:grid-cols-2">
             {stats.by_category.map((c) => (
@@ -191,7 +234,9 @@ function Dashboard({ stats }: { stats: Stats }) {
               <div
                 key={p.value}
                 className={cn('h-full transition-all duration-700 first:rounded-l-full last:rounded-r-full', p.bar)}
-                style={{ width: `${priorityTotal ? ((stats.by_priority[String(p.value) as '1'] ?? 0) / priorityTotal) * 100 : 0}%` }}
+                style={{
+                  width: `${priorityTotal ? ((stats.by_priority[String(p.value) as '1'] ?? 0) / priorityTotal) * 100 : 0}%`,
+                }}
               />
             ))}
           </div>
@@ -238,18 +283,32 @@ function ActivityChart({ activity }: { activity: Stats['activity'] }) {
         </div>
         <div className="flex gap-4 text-xs">
           <span className="flex items-center gap-1.5">
-            <span className="size-2.5 rounded-sm bg-zinc-300 dark:bg-zinc-600" /> Created <b className="font-semibold tabular-nums">{created}</b>
+            <span className="size-2.5 rounded-sm bg-zinc-300 dark:bg-zinc-600" /> Created{' '}
+            <b className="font-semibold tabular-nums">{created}</b>
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="size-2.5 rounded-sm bg-accent-500" /> Completed <b className="font-semibold tabular-nums">{completed}</b>
+            <span className="size-2.5 rounded-sm bg-accent-500" /> Completed{' '}
+            <b className="font-semibold tabular-nums">{completed}</b>
           </span>
         </div>
       </div>
       <div className="relative mt-4">
-        <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label="Bar chart of tasks created and completed per day over the last 14 days">
+        <svg
+          viewBox={`0 0 ${W} ${H}`}
+          className="h-auto w-full"
+          role="img"
+          aria-label="Bar chart of tasks created and completed per day over the last 14 days"
+        >
           {ticks.map((t) => (
             <g key={t}>
-              <line x1={PAD.left} x2={W - PAD.right} y1={y(t)} y2={y(t)} className="stroke-zinc-100 dark:stroke-zinc-800" strokeDasharray="3 3" />
+              <line
+                x1={PAD.left}
+                x2={W - PAD.right}
+                y1={y(t)}
+                y2={y(t)}
+                className="stroke-zinc-100 dark:stroke-zinc-800"
+                strokeDasharray="3 3"
+              />
               <text x={PAD.left - 8} y={y(t) + 3} textAnchor="end" className="fill-zinc-400 text-[10px]">
                 {t}
               </text>
@@ -282,7 +341,12 @@ function ActivityChart({ activity }: { activity: Stats['activity'] }) {
                 className="fill-accent-500 transition-all duration-500"
               />
               {(i % 2 === 0 || i === activity.length - 1) && (
-                <text x={PAD.left + i * slot + slot / 2} y={H - 8} textAnchor="middle" className="fill-zinc-400 text-[10px]">
+                <text
+                  x={PAD.left + i * slot + slot / 2}
+                  y={H - 8}
+                  textAnchor="middle"
+                  className="fill-zinc-400 text-[10px]"
+                >
                   {format(parseDate(d.date)!, 'MMM d')}
                 </text>
               )}

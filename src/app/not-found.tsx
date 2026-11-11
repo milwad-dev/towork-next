@@ -14,7 +14,9 @@ export default function NotFound() {
         404
       </p>
       <h1 className="mt-2 text-xl font-semibold tracking-tight">This page took the day off</h1>
-      <p className="mt-2 max-w-sm text-sm text-zinc-500 dark:text-zinc-400">The page you&apos;re looking for doesn&apos;t exist or was moved.</p>
+      <p className="mt-2 max-w-sm text-sm text-zinc-500 dark:text-zinc-400">
+        The page you&apos;re looking for doesn&apos;t exist or was moved.
+      </p>
       {/* "/" redirects to Today or to sign in, depending on the session cookie. */}
       <Link href="/" className="btn btn-primary btn-lg mt-8">
         <ArrowLeft className="size-4" /> Back to ToWork

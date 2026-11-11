@@ -1,18 +1,7 @@
 /** API models, see towork-backend docs/api-v1.md. */
 
 export type ColorKey =
-  | 'slate'
-  | 'red'
-  | 'orange'
-  | 'amber'
-  | 'green'
-  | 'teal'
-  | 'sky'
-  | 'blue'
-  | 'indigo'
-  | 'violet'
-  | 'pink'
-  | 'rose'
+  'slate' | 'red' | 'orange' | 'amber' | 'green' | 'teal' | 'sky' | 'blue' | 'indigo' | 'violet' | 'pink' | 'rose'
 
 export type TaskStatus = 'todo' | 'in_progress' | 'done'
 /** 1 = low, 2 = medium, 3 = high, 4 = urgent */

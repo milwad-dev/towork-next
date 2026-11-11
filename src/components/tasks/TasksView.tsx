@@ -1,7 +1,17 @@
 'use client'
 
 import { format } from 'date-fns'
-import { CalendarRange, ChevronRight, CircleCheckBig, Inbox, Pencil, SearchX, Star, Tag, type LucideIcon } from 'lucide-react'
+import {
+  CalendarRange,
+  ChevronRight,
+  CircleCheckBig,
+  Inbox,
+  Pencil,
+  SearchX,
+  Star,
+  Tag,
+  type LucideIcon,
+} from 'lucide-react'
 import { notFound } from 'next/navigation'
 import { useMemo, useState } from 'react'
 import { CollectionDialog } from '@/components/app/CollectionDialog'
@@ -70,20 +80,44 @@ export function TasksView({ mode, id }: { mode: TasksMode; id?: number }) {
         return p
       }
     }
-  }, [mode, id, today, search, filters.status, filters.priority, filters.due, filters.category_id, filters.label_id, filters.sort, filters.direction])
+  }, [
+    mode,
+    id,
+    today,
+    search,
+    filters.status,
+    filters.priority,
+    filters.due,
+    filters.category_id,
+    filters.label_id,
+    filters.sort,
+    filters.direction,
+  ])
 
   const query = useTaskList(params)
   const items = flatTasks(query.data)
   const total = query.data?.pages.at(-1)?.meta.total ?? items.length
   const openCount = items.filter((t) => t.status !== 'done').length
-  const hasFilters = !!(filters.search || filters.status.length || filters.priority.length || filters.due || filters.category_id || filters.label_id)
+  const hasFilters = !!(
+    filters.search ||
+    filters.status.length ||
+    filters.priority.length ||
+    filters.due ||
+    filters.category_id ||
+    filters.label_id
+  )
 
   const header: { title: string; subtitle?: string; icon: LucideIcon; iconClass: string } = (() => {
     switch (mode) {
       case 'today':
         return { title: 'Today', subtitle: format(new Date(), 'EEEE, MMMM d'), icon: Star, iconClass: 'text-amber-500' }
       case 'upcoming':
-        return { title: 'Upcoming', subtitle: 'Everything scheduled after today', icon: CalendarRange, iconClass: 'text-accent-500' }
+        return {
+          title: 'Upcoming',
+          subtitle: 'Everything scheduled after today',
+          icon: CalendarRange,
+          iconClass: 'text-accent-500',
+        }
       case 'category':
         return { title: category?.name ?? '…', icon: iconOf(category?.icon), iconClass: colorOf(category?.color).text }
       case 'label':
@@ -109,7 +143,8 @@ export function TasksView({ mode, id }: { mode: TasksMode; id?: number }) {
       const overdue = items.filter((t) => t.due_date && t.due_date < today)
       const rest = items.filter((t) => !t.due_date || t.due_date >= today)
       const out: Group[] = []
-      if (overdue.length) out.push({ key: 'overdue', title: 'Overdue', tone: 'text-red-600 dark:text-red-400', items: overdue })
+      if (overdue.length)
+        out.push({ key: 'overdue', title: 'Overdue', tone: 'text-red-600 dark:text-red-400', items: overdue })
       out.push({ key: 'today', title: 'Today', items: rest, hideDue: true })
       return out
     }
@@ -134,9 +169,12 @@ export function TasksView({ mode, id }: { mode: TasksMode; id?: number }) {
       })).filter((g) => g.items.length)
     }
     if (filters.group === 'priority') {
-      return PRIORITIES.map((p) => ({ key: `p${p.value}`, title: p.label, dot: p.bar, items: items.filter((t) => t.priority === p.value) })).filter(
-        (g) => g.items.length,
-      )
+      return PRIORITIES.map((p) => ({
+        key: `p${p.value}`,
+        title: p.label,
+        dot: p.bar,
+        items: items.filter((t) => t.priority === p.value),
+      })).filter((g) => g.items.length)
     }
     return [{ key: 'all', title: null, items }]
   }, [items, mode, today, filters.group])
@@ -156,7 +194,9 @@ export function TasksView({ mode, id }: { mode: TasksMode; id?: number }) {
             <p className="text-[13px] text-zinc-500 dark:text-zinc-400">
               {header.subtitle && `${header.subtitle} · `}
               {(!query.isPending || items.length > 0) &&
-                (mode === 'today' || mode === 'upcoming' ? `${openCount} open` : `${total} ${total === 1 ? 'task' : 'tasks'}`)}
+                (mode === 'today' || mode === 'upcoming'
+                  ? `${openCount} open`
+                  : `${total} ${total === 1 ? 'task' : 'tasks'}`)}
             </p>
           </div>
           {(mode === 'category' || mode === 'label') && (category || label) && (
@@ -181,7 +221,13 @@ export function TasksView({ mode, id }: { mode: TasksMode; id?: number }) {
         )}
 
         {filterable && (
-          <TaskFilters value={filters} onChange={setFilters} className="mt-5" hideCategory={mode === 'category'} hideLabel={mode === 'label'} />
+          <TaskFilters
+            value={filters}
+            onChange={setFilters}
+            className="mt-5"
+            hideCategory={mode === 'category'}
+            hideLabel={mode === 'label'}
+          />
         )}
       </header>
 
@@ -210,20 +256,39 @@ export function TasksView({ mode, id }: { mode: TasksMode; id?: number }) {
         </div>
       ) : !items.length ? (
         filterable && hasFilters ? (
-          <EmptyState icon={SearchX} title="No tasks match your filters" description="Try a different search or clear the filters.">
+          <EmptyState
+            icon={SearchX}
+            title="No tasks match your filters"
+            description="Try a different search or clear the filters."
+          >
             <button type="button" className="btn btn-secondary" onClick={clear}>
               Clear filters
             </button>
           </EmptyState>
         ) : mode === 'today' ? (
-          <EmptyState icon={CircleCheckBig} tone="green" title="All clear for today" description="Enjoy the calm, or plan something new above." />
+          <EmptyState
+            icon={CircleCheckBig}
+            tone="green"
+            title="All clear for today"
+            description="Enjoy the calm, or plan something new above."
+          />
         ) : mode === 'upcoming' ? (
-          <EmptyState icon={CalendarRange} title="Nothing scheduled" description="Tasks with a future due date will show up here, grouped by day." />
+          <EmptyState
+            icon={CalendarRange}
+            title="Nothing scheduled"
+            description="Tasks with a future due date will show up here, grouped by day."
+          />
         ) : (
-          <EmptyState icon={Inbox} title="No tasks yet" description="Capture your first task above. Press N anywhere to add one quickly." />
+          <EmptyState
+            icon={Inbox}
+            title="No tasks yet"
+            description="Capture your first task above. Press N anywhere to add one quickly."
+          />
         )
       ) : (
-        <div className={cn('space-y-6', query.isFetching && !query.isFetchingNextPage && 'opacity-80 transition-opacity')}>
+        <div
+          className={cn('space-y-6', query.isFetching && !query.isFetchingNextPage && 'opacity-80 transition-opacity')}
+        >
           {groups.map((g) => {
             const isCollapsed = g.collapsible && collapsed[g.key]
             return (
@@ -239,7 +304,11 @@ export function TasksView({ mode, id }: { mode: TasksMode; id?: number }) {
                     disabled={!g.collapsible}
                     onClick={() => setCollapsed((c) => ({ ...c, [g.key]: !c[g.key] }))}
                   >
-                    {g.collapsible && <ChevronRight className={cn('size-4 text-zinc-400 transition-transform', !isCollapsed && 'rotate-90')} />}
+                    {g.collapsible && (
+                      <ChevronRight
+                        className={cn('size-4 text-zinc-400 transition-transform', !isCollapsed && 'rotate-90')}
+                      />
+                    )}
                     {g.dot && <span className={cn('size-2 rounded-full', g.dot)} />}
                     {g.title}
                     <span className="font-normal text-zinc-400">{g.items.length}</span>
@@ -258,7 +327,12 @@ export function TasksView({ mode, id }: { mode: TasksMode; id?: number }) {
 
           {query.hasNextPage && (
             <div className="flex justify-center pt-2">
-              <button type="button" className="btn btn-secondary" disabled={query.isFetchingNextPage} onClick={() => query.fetchNextPage()}>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                disabled={query.isFetchingNextPage}
+                onClick={() => query.fetchNextPage()}
+              >
                 {query.isFetchingNextPage && <Spinner />} Load more
               </button>
             </div>
@@ -267,7 +341,12 @@ export function TasksView({ mode, id }: { mode: TasksMode; id?: number }) {
       )}
 
       {editOpen && (category || label) && (
-        <CollectionDialog open kind={mode === 'label' ? 'label' : 'category'} item={category ?? label} onClose={() => setEditOpen(false)} />
+        <CollectionDialog
+          open
+          kind={mode === 'label' ? 'label' : 'category'}
+          item={category ?? label}
+          onClose={() => setEditOpen(false)}
+        />
       )}
     </div>
   )

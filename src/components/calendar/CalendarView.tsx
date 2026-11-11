@@ -1,6 +1,15 @@
 'use client'
 
-import { DndContext, PointerSensor, TouchSensor, useDraggable, useDroppable, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core'
+import {
+  DndContext,
+  PointerSensor,
+  TouchSensor,
+  useDraggable,
+  useDroppable,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core'
 import { addMonths, format, isSameMonth, isToday, subMonths } from 'date-fns'
 import { CalendarDays, ChevronLeft, ChevronRight, Plus } from 'lucide-react'
 import { useMemo, useState } from 'react'
@@ -109,7 +118,10 @@ export function CalendarView() {
         <div className={cn('card overflow-hidden', query.isFetching && 'opacity-70 transition-opacity')}>
           <div className="grid grid-cols-7 border-b border-zinc-200/80 bg-zinc-50/80 dark:border-zinc-800 dark:bg-zinc-900">
             {WEEKDAYS.map((d) => (
-              <div key={d} className="py-2 text-center text-[11px] font-semibold tracking-wider text-zinc-500 uppercase">
+              <div
+                key={d}
+                className="py-2 text-center text-[11px] font-semibold tracking-wider text-zinc-500 uppercase"
+              >
                 {d}
               </div>
             ))}
@@ -128,7 +140,9 @@ export function CalendarView() {
           </div>
         </div>
       </DndContext>
-      <p className="mt-3 hidden text-xs text-zinc-400 sm:block">Tip: drag a task to another day to reschedule it. Double-click a day to add a task.</p>
+      <p className="mt-3 hidden text-xs text-zinc-400 sm:block">
+        Tip: drag a task to another day to reschedule it. Double-click a day to add a task.
+      </p>
 
       {/* Mobile agenda for the selected day */}
       <section className="mt-6 sm:hidden" aria-live="polite">
@@ -139,7 +153,9 @@ export function CalendarView() {
           </button>
         </div>
         {!selectedTasks.length && (
-          <p className="rounded-xl border border-dashed border-zinc-200 py-6 text-center text-[13px] text-zinc-400 dark:border-zinc-800">No tasks on this day.</p>
+          <p className="rounded-xl border border-dashed border-zinc-200 py-6 text-center text-[13px] text-zinc-400 dark:border-zinc-800">
+            No tasks on this day.
+          </p>
         )}
         {selectedTasks.map((t) => (
           <TaskItem key={t.id} task={t} hideDue />
@@ -149,7 +165,19 @@ export function CalendarView() {
   )
 }
 
-function DayCell({ date, month, tasks, selected, onSelect }: { date: Date; month: Date; tasks: Task[]; selected: boolean; onSelect: () => void }) {
+function DayCell({
+  date,
+  month,
+  tasks,
+  selected,
+  onSelect,
+}: {
+  date: Date
+  month: Date
+  tasks: Task[]
+  selected: boolean
+  onSelect: () => void
+}) {
   const iso = toISODate(date)
   const { setNodeRef, isOver } = useDroppable({ id: iso })
   const inMonth = isSameMonth(date, month)
@@ -172,7 +200,11 @@ function DayCell({ date, month, tasks, selected, onSelect }: { date: Date; month
         <span
           className={cn(
             'flex size-6 items-center justify-center rounded-full text-xs font-medium tabular-nums',
-            isToday(date) ? 'bg-accent-600 text-white' : inMonth ? 'text-zinc-700 dark:text-zinc-300' : 'text-zinc-400 dark:text-zinc-600',
+            isToday(date)
+              ? 'bg-accent-600 text-white'
+              : inMonth
+                ? 'text-zinc-700 dark:text-zinc-300'
+                : 'text-zinc-400 dark:text-zinc-600',
           )}
         >
           {format(date, 'd')}
@@ -193,7 +225,13 @@ function DayCell({ date, month, tasks, selected, onSelect }: { date: Date; month
       {/* Mobile: dots */}
       <div className="mt-1 flex flex-wrap justify-center gap-0.5 sm:hidden">
         {tasks.slice(0, 4).map((t) => (
-          <span key={t.id} className={cn('size-1.5 rounded-full', t.status === 'done' ? 'bg-zinc-300 dark:bg-zinc-600' : priorityOf(t.priority).bar)} />
+          <span
+            key={t.id}
+            className={cn(
+              'size-1.5 rounded-full',
+              t.status === 'done' ? 'bg-zinc-300 dark:bg-zinc-600' : priorityOf(t.priority).bar,
+            )}
+          />
         ))}
       </div>
 
@@ -232,8 +270,15 @@ function DayCell({ date, month, tasks, selected, onSelect }: { date: Date; month
                       openTask(t.id)
                     }}
                   >
-                    <span className={cn('size-2 shrink-0 rounded-full', t.status === 'done' ? 'bg-zinc-300' : priorityOf(t.priority).bar)} />
-                    <span className={cn('truncate', t.status === 'done' && 'text-zinc-400 line-through')}>{t.title}</span>
+                    <span
+                      className={cn(
+                        'size-2 shrink-0 rounded-full',
+                        t.status === 'done' ? 'bg-zinc-300' : priorityOf(t.priority).bar,
+                      )}
+                    />
+                    <span className={cn('truncate', t.status === 'done' && 'text-zinc-400 line-through')}>
+                      {t.title}
+                    </span>
                   </button>
                 ))}
               </>

@@ -18,7 +18,12 @@ export function EmptyState({
   return (
     <div className="flex flex-col items-center px-6 py-16 text-center">
       <div className="relative mb-5">
-        <div className={cn('absolute inset-0 -z-10 scale-150 rounded-full blur-2xl', tone === 'green' ? 'bg-green-500/15' : 'bg-accent-500/15')} />
+        <div
+          className={cn(
+            'absolute inset-0 -z-10 scale-150 rounded-full blur-2xl',
+            tone === 'green' ? 'bg-green-500/15' : 'bg-accent-500/15',
+          )}
+        />
         <div
           className={cn(
             'flex size-14 items-center justify-center rounded-2xl border bg-white shadow-soft dark:bg-zinc-900',

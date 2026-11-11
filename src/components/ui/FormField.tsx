@@ -24,10 +24,18 @@ export function FormField({
   const id = useId()
   return (
     <div>
-      {labelSlot ? labelSlot(id) : label && <label htmlFor={id} className="label">{label}</label>}
+      {labelSlot
+        ? labelSlot(id)
+        : label && (
+            <label htmlFor={id} className="label">
+              {label}
+            </label>
+          )}
       {children({ id, 'aria-invalid': !!error, 'aria-describedby': error ? `${id}-error` : undefined })}
       {error ? (
-        <p id={`${id}-error`} className="field-error">{error}</p>
+        <p id={`${id}-error`} className="field-error">
+          {error}
+        </p>
       ) : (
         hint && <p className="mt-1.5 text-xs text-zinc-500 dark:text-zinc-400">{hint}</p>
       )}

@@ -7,7 +7,15 @@ import { PRIORITIES, priorityOf } from '@/lib/constants'
 import type { Priority } from '@/lib/types'
 import { PriorityFlag } from './PriorityFlag'
 
-export function PriorityPicker({ value, onChange, compact = false }: { value: Priority; onChange: (p: Priority) => void; compact?: boolean }) {
+export function PriorityPicker({
+  value,
+  onChange,
+  compact = false,
+}: {
+  value: Priority
+  onChange: (p: Priority) => void
+  compact?: boolean
+}) {
   return (
     <Popover
       width="w-44"
@@ -16,7 +24,9 @@ export function PriorityPicker({ value, onChange, compact = false }: { value: Pr
           type="button"
           className={cn(
             'btn btn-sm border font-normal hover:bg-zinc-100 dark:hover:bg-zinc-800',
-            value > 1 ? 'border-zinc-200 dark:border-zinc-700' : 'border-dashed border-zinc-300 text-zinc-500 dark:border-zinc-700',
+            value > 1
+              ? 'border-zinc-200 dark:border-zinc-700'
+              : 'border-dashed border-zinc-300 text-zinc-500 dark:border-zinc-700',
             open && 'bg-zinc-100 dark:bg-zinc-800',
           )}
           aria-expanded={open}

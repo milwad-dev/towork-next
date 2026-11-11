@@ -40,7 +40,10 @@ export function AppShell({ children }: { children: ReactNode }) {
     <Link
       key={item.href}
       href={item.href}
-      className={cn('flex flex-col items-center gap-0.5 py-2 text-[11px] font-medium', pathname === item.href ? 'text-accent-600 dark:text-accent-400' : 'text-zinc-500')}
+      className={cn(
+        'flex flex-col items-center gap-0.5 py-2 text-[11px] font-medium',
+        pathname === item.href ? 'text-accent-600 dark:text-accent-400' : 'text-zinc-500',
+      )}
     >
       <item.icon className="size-5" /> {item.label}
     </Link>
@@ -48,7 +51,10 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex min-h-dvh">
-      <a href="#main" className="sr-only z-50 rounded-lg bg-white px-3 py-2 focus:not-sr-only focus:fixed focus:top-2 focus:left-2">
+      <a
+        href="#main"
+        className="sr-only z-50 rounded-lg bg-white px-3 py-2 focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+      >
         Skip to content
       </a>
 
@@ -65,7 +71,10 @@ export function AppShell({ children }: { children: ReactNode }) {
       {/* Mobile drawer */}
       {mobileNavOpen && (
         <>
-          <div className="fixed inset-0 z-40 animate-fade-in bg-zinc-950/40 md:hidden" onClick={() => uiStore.set({ mobileNavOpen: false })} />
+          <div
+            className="fixed inset-0 z-40 animate-fade-in bg-zinc-950/40 md:hidden"
+            onClick={() => uiStore.set({ mobileNavOpen: false })}
+          />
           <aside className="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] animate-sheet-in bg-zinc-50 shadow-pop md:hidden dark:bg-zinc-900">
             <Sidebar mobile onNavigate={() => uiStore.set({ mobileNavOpen: false })} />
           </aside>
@@ -75,13 +84,23 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Mobile top bar */}
         <header className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b border-zinc-200/70 bg-white/80 px-3 backdrop-blur-lg md:hidden dark:border-zinc-800/70 dark:bg-zinc-950/80">
-          <button type="button" className="btn-icon" aria-label="Open menu" onClick={() => uiStore.set({ mobileNavOpen: true })}>
+          <button
+            type="button"
+            className="btn-icon"
+            aria-label="Open menu"
+            onClick={() => uiStore.set({ mobileNavOpen: true })}
+          >
             <Menu className="size-5" />
           </button>
           <Link href="/today" className="rounded-lg">
             <Logo size="size-6" />
           </Link>
-          <button type="button" className="btn-icon ml-auto" aria-label="Search" onClick={() => uiStore.set({ paletteOpen: true })}>
+          <button
+            type="button"
+            className="btn-icon ml-auto"
+            aria-label="Search"
+            onClick={() => uiStore.set({ paletteOpen: true })}
+          >
             <Search className="size-5" />
           </button>
         </header>

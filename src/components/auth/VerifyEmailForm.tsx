@@ -73,7 +73,8 @@ export function VerifyEmailForm() {
       </div>
       <h1 className="text-2xl font-semibold tracking-tight">{welcome ? 'One last step' : 'Verify your email'}</h1>
       <p className="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">
-        Enter the 6-digit code we sent to <span className="font-medium text-zinc-700 dark:text-zinc-200">{user?.email ?? 'your email'}</span>.
+        Enter the 6-digit code we sent to{' '}
+        <span className="font-medium text-zinc-700 dark:text-zinc-200">{user?.email ?? 'your email'}</span>.
       </p>
 
       <form

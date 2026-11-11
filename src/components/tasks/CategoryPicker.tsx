@@ -6,7 +6,15 @@ import { cn } from '@/lib/cn'
 import { colorOf, iconOf } from '@/lib/constants'
 import { useCategories } from '@/lib/queries'
 
-export function CategoryPicker({ value, onChange, compact = false }: { value: number | null; onChange: (id: number | null) => void; compact?: boolean }) {
+export function CategoryPicker({
+  value,
+  onChange,
+  compact = false,
+}: {
+  value: number | null
+  onChange: (id: number | null) => void
+  compact?: boolean
+}) {
   const { data: categories = [] } = useCategories()
   const current = categories.find((c) => c.id === value) ?? null
   const Icon = current ? iconOf(current.icon) : Folder
@@ -19,7 +27,9 @@ export function CategoryPicker({ value, onChange, compact = false }: { value: nu
           type="button"
           className={cn(
             'btn btn-sm max-w-44 border font-normal hover:bg-zinc-100 dark:hover:bg-zinc-800',
-            current ? 'border-zinc-200 dark:border-zinc-700' : 'border-dashed border-zinc-300 text-zinc-500 dark:border-zinc-700',
+            current
+              ? 'border-zinc-200 dark:border-zinc-700'
+              : 'border-dashed border-zinc-300 text-zinc-500 dark:border-zinc-700',
             open && 'bg-zinc-100 dark:bg-zinc-800',
           )}
           aria-expanded={open}
@@ -33,7 +43,9 @@ export function CategoryPicker({ value, onChange, compact = false }: { value: nu
     >
       {({ close }) => (
         <>
-          {!categories.length && <p className="px-2.5 py-2 text-xs text-zinc-500">No categories yet. Create one from the sidebar.</p>}
+          {!categories.length && (
+            <p className="px-2.5 py-2 text-xs text-zinc-500">No categories yet. Create one from the sidebar.</p>
+          )}
           {categories.map((c) => {
             const CIcon = iconOf(c.icon)
             return (

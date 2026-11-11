@@ -41,7 +41,9 @@ export function TaskCheckbox({
       <Check
         className={cn(
           'size-3 transition-all duration-200',
-          checked ? 'scale-100 text-white opacity-100' : 'scale-75 text-zinc-400 opacity-0 group-hover/check:opacity-60',
+          checked
+            ? 'scale-100 text-white opacity-100'
+            : 'scale-75 text-zinc-400 opacity-0 group-hover/check:opacity-60',
         )}
         strokeWidth={3}
       />

@@ -40,10 +40,20 @@ const nav = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
 ]
 
-const activeLink = 'bg-white text-zinc-900 shadow-soft ring-1 ring-zinc-200/70 dark:bg-zinc-800 dark:text-white dark:ring-zinc-700/60'
-const idleLink = 'text-zinc-600 hover:bg-zinc-200/60 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800/70 dark:hover:text-zinc-100'
+const activeLink =
+  'bg-white text-zinc-900 shadow-soft ring-1 ring-zinc-200/70 dark:bg-zinc-800 dark:text-white dark:ring-zinc-700/60'
+const idleLink =
+  'text-zinc-600 hover:bg-zinc-200/60 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800/70 dark:hover:text-zinc-100'
 
-export function Sidebar({ collapsed = false, mobile = false, onNavigate }: { collapsed?: boolean; mobile?: boolean; onNavigate?: () => void }) {
+export function Sidebar({
+  collapsed = false,
+  mobile = false,
+  onNavigate,
+}: {
+  collapsed?: boolean
+  mobile?: boolean
+  onNavigate?: () => void
+}) {
   const pathname = usePathname()
   const router = useRouter()
   const isMac = useIsMac()
@@ -51,7 +61,12 @@ export function Sidebar({ collapsed = false, mobile = false, onNavigate }: { col
   const labels = useLabels()
   const categoryMutations = useCollectionMutations('categories')
   const labelMutations = useCollectionMutations('labels')
-  const [dialog, setDialog] = useState<{ open: boolean; kind: CollectionKind; item: Category | Label | null; key: number }>({
+  const [dialog, setDialog] = useState<{
+    open: boolean
+    kind: CollectionKind
+    item: Category | Label | null
+    key: number
+  }>({
     open: false,
     kind: 'category',
     item: null,
@@ -182,7 +197,9 @@ export function Sidebar({ collapsed = false, mobile = false, onNavigate }: { col
           <div key={section.kind}>
             {!collapsed ? (
               <div className="mt-6 mb-1 flex items-center justify-between px-2.5">
-                <h3 className="text-[11px] font-semibold tracking-wider text-zinc-400 uppercase dark:text-zinc-500">{section.title}</h3>
+                <h3 className="text-[11px] font-semibold tracking-wider text-zinc-400 uppercase dark:text-zinc-500">
+                  {section.title}
+                </h3>
                 <button
                   type="button"
                   className="btn-icon size-6"
@@ -226,7 +243,9 @@ export function Sidebar({ collapsed = false, mobile = false, onNavigate }: { col
                       {!collapsed && (
                         <>
                           <span className="min-w-0 flex-1 truncate">{item.name}</span>
-                          <span className="text-xs text-zinc-400 tabular-nums group-hover/item:opacity-0">{count || ''}</span>
+                          <span className="text-xs text-zinc-400 tabular-nums group-hover/item:opacity-0">
+                            {count || ''}
+                          </span>
                         </>
                       )}
                     </Link>

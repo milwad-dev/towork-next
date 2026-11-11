@@ -61,7 +61,11 @@ function SettingsBody({ user }: { user: User }) {
     setProfileErrors({})
     const emailChanged = profile.email.trim() !== user.email
     try {
-      await auth.updateProfile({ name: profile.name.trim(), email: profile.email.trim(), phone: profile.phone.trim() || null })
+      await auth.updateProfile({
+        name: profile.name.trim(),
+        email: profile.email.trim(),
+        phone: profile.phone.trim() || null,
+      })
       toast(emailChanged ? 'Profile saved. Please verify your new email.' : 'Profile saved')
     } catch (err) {
       const fields = fieldErrors(err)
@@ -138,10 +142,19 @@ function SettingsBody({ user }: { user: User }) {
         <div className="flex flex-wrap items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 dark:border-amber-500/20 dark:bg-amber-500/10">
           <MailWarning className="size-5 text-amber-600 dark:text-amber-400" />
           <div className="min-w-0 flex-1">
-            <p className="text-[13px] font-semibold text-amber-900 dark:text-amber-200">Your email isn&apos;t verified</p>
-            <p className="text-xs text-amber-800/80 dark:text-amber-300/80">We&apos;ll send a 6-digit code to {user.email}.</p>
+            <p className="text-[13px] font-semibold text-amber-900 dark:text-amber-200">
+              Your email isn&apos;t verified
+            </p>
+            <p className="text-xs text-amber-800/80 dark:text-amber-300/80">
+              We&apos;ll send a 6-digit code to {user.email}.
+            </p>
           </div>
-          <button type="button" className="btn btn-sm bg-amber-600 text-white hover:bg-amber-500" disabled={sending} onClick={sendCode}>
+          <button
+            type="button"
+            className="btn btn-sm bg-amber-600 text-white hover:bg-amber-500"
+            disabled={sending}
+            onClick={sendCode}
+          >
             {sending && <Spinner />} Send code
           </button>
         </div>
@@ -161,13 +174,22 @@ function SettingsBody({ user }: { user: User }) {
             <div>
               <p className="font-medium">{user.name}</p>
               <p className="flex items-center gap-1 text-xs text-zinc-500">
-                {verified && <BadgeCheck className="size-3.5 text-green-500" />} {verified ? 'Verified account' : 'Unverified'}
+                {verified && <BadgeCheck className="size-3.5 text-green-500" />}{' '}
+                {verified ? 'Verified account' : 'Unverified'}
               </p>
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <FormField label="Name" error={profileErrors.name}>
-              {(f) => <input {...f} value={profile.name} onChange={(e) => setProfile({ ...profile, name: e.target.value })} className="input" autoComplete="name" />}
+              {(f) => (
+                <input
+                  {...f}
+                  value={profile.name}
+                  onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+                  className="input"
+                  autoComplete="name"
+                />
+              )}
             </FormField>
             <FormField label="Phone" error={profileErrors.phone}>
               {(f) => (
@@ -183,9 +205,20 @@ function SettingsBody({ user }: { user: User }) {
               )}
             </FormField>
           </div>
-          <FormField label="Email" error={profileErrors.email} hint="Changing your email will require verifying it again.">
+          <FormField
+            label="Email"
+            error={profileErrors.email}
+            hint="Changing your email will require verifying it again."
+          >
             {(f) => (
-              <input {...f} value={profile.email} onChange={(e) => setProfile({ ...profile, email: e.target.value })} className="input" type="email" autoComplete="email" />
+              <input
+                {...f}
+                value={profile.email}
+                onChange={(e) => setProfile({ ...profile, email: e.target.value })}
+                className="input"
+                type="email"
+                autoComplete="email"
+              />
             )}
           </FormField>
           <div className="flex justify-end">
@@ -269,7 +302,11 @@ function SettingsBody({ user }: { user: User }) {
             </FormField>
           </div>
           <div className="flex justify-end">
-            <button type="submit" className="btn btn-primary" disabled={savingPassword || !password.current_password || !password.password}>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={savingPassword || !password.current_password || !password.password}
+            >
               {savingPassword && <Spinner />} Update password
             </button>
           </div>
@@ -281,7 +318,9 @@ function SettingsBody({ user }: { user: User }) {
         <div className="flex flex-wrap items-center gap-4 p-5">
           <div className="min-w-0 flex-1">
             <h2 className="text-[15px] font-semibold text-red-600 dark:text-red-400">Delete account</h2>
-            <p className="text-xs text-zinc-500">Permanently delete your account, tasks, categories and labels. This cannot be undone.</p>
+            <p className="text-xs text-zinc-500">
+              Permanently delete your account, tasks, categories and labels. This cannot be undone.
+            </p>
           </div>
           <button type="button" className="btn btn-danger" onClick={() => setDeleteOpen(true)}>
             Delete account
@@ -299,7 +338,12 @@ function SettingsBody({ user }: { user: User }) {
             <button type="button" className="btn btn-secondary" onClick={() => setDeleteOpen(false)}>
               Cancel
             </button>
-            <button type="submit" form="delete-form" className="btn btn-danger" disabled={deleteForm.confirm !== 'DELETE' || !deleteForm.password || deleting}>
+            <button
+              type="submit"
+              form="delete-form"
+              className="btn btn-danger"
+              disabled={deleteForm.confirm !== 'DELETE' || !deleteForm.password || deleting}
+            >
               {deleting && <Spinner />} Delete forever
             </button>
           </>
@@ -307,7 +351,15 @@ function SettingsBody({ user }: { user: User }) {
       >
         <form id="delete-form" className="space-y-4" onSubmit={deleteAccount}>
           <FormField label="Type DELETE to confirm">
-            {(f) => <input {...f} value={deleteForm.confirm} onChange={(e) => setDeleteForm({ ...deleteForm, confirm: e.target.value })} className="input" autoComplete="off" />}
+            {(f) => (
+              <input
+                {...f}
+                value={deleteForm.confirm}
+                onChange={(e) => setDeleteForm({ ...deleteForm, confirm: e.target.value })}
+                className="input"
+                autoComplete="off"
+              />
+            )}
           </FormField>
           <FormField label="Your password" error={deleteError}>
             {(f) => (

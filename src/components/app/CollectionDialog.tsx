@@ -75,7 +75,12 @@ export function CollectionDialog({
           <button type="button" className="btn btn-secondary" onClick={onClose}>
             Cancel
           </button>
-          <button type="submit" form="collection-form" className="btn btn-primary" disabled={saving || !form.name.trim()}>
+          <button
+            type="submit"
+            form="collection-form"
+            className="btn btn-primary"
+            disabled={saving || !form.name.trim()}
+          >
             {saving && <Spinner />} {item ? 'Save changes' : `Create ${noun}`}
           </button>
         </>

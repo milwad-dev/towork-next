@@ -71,7 +71,8 @@ export const QuickAdd = forwardRef<
   if (parsed.priority && parsed.priority !== form.priority) hints.push('priority')
   if (parsed.category_id && parsed.category_id !== form.category_id)
     hints.push(`#${categories.find((c) => c.id === parsed.category_id)?.name}`)
-  for (const id of parsed.label_ids) if (!form.label_ids.includes(id)) hints.push(`@${labels.find((l) => l.id === id)?.name}`)
+  for (const id of parsed.label_ids)
+    if (!form.label_ids.includes(id)) hints.push(`@${labels.find((l) => l.id === id)?.name}`)
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
@@ -113,7 +114,9 @@ export const QuickAdd = forwardRef<
     <form
       className={cn(
         'rounded-xl border transition',
-        open ? 'border-zinc-200 bg-white shadow-soft dark:border-zinc-800 dark:bg-zinc-900' : 'border-transparent hover:bg-zinc-50 dark:hover:bg-zinc-900',
+        open
+          ? 'border-zinc-200 bg-white shadow-soft dark:border-zinc-800 dark:bg-zinc-900'
+          : 'border-transparent hover:bg-zinc-50 dark:hover:bg-zinc-900',
       )}
       onSubmit={submit}
       onFocus={() => setFocused(true)}
@@ -171,7 +174,12 @@ export const QuickAdd = forwardRef<
           )}
           {error && <p className="field-error">{error}</p>}
           <div className="mt-3 flex flex-wrap items-center gap-1.5">
-            <DuePicker date={form.due_date} time={form.due_time} withTime onChange={(due_date, due_time) => setForm({ ...form, due_date, due_time })} />
+            <DuePicker
+              date={form.due_date}
+              time={form.due_time}
+              withTime
+              onChange={(due_date, due_time) => setForm({ ...form, due_date, due_time })}
+            />
             <PriorityPicker value={form.priority} compact onChange={(priority) => setForm({ ...form, priority })} />
             <CategoryPicker value={form.category_id} onChange={(category_id) => setForm({ ...form, category_id })} />
             <LabelPicker value={form.label_ids} onChange={(label_ids) => setForm({ ...form, label_ids })} />

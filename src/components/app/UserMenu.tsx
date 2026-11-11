@@ -68,7 +68,11 @@ export function UserMenu({ collapsed = false }: { collapsed?: boolean }) {
             <p className="truncate text-[13px] font-medium">{user?.name}</p>
             <p className="truncate text-xs text-zinc-500">{user?.email}</p>
           </div>
-          <div className="mx-1.5 mb-1.5 grid grid-cols-3 gap-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-800" role="radiogroup" aria-label="Theme">
+          <div
+            className="mx-1.5 mb-1.5 grid grid-cols-3 gap-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-800"
+            role="radiogroup"
+            aria-label="Theme"
+          >
             {themes.map((t) => (
               <button
                 key={t.value}
@@ -103,7 +107,12 @@ export function UserMenu({ collapsed = false }: { collapsed?: boolean }) {
             <Keyboard className="size-4 text-zinc-400" /> Keyboard shortcuts <span className="kbd ml-auto">?</span>
           </button>
           <div className="my-1 h-px bg-zinc-100 dark:bg-zinc-800" />
-          <button type="button" className="menu-item text-red-600 dark:text-red-400" role="menuitem" onClick={() => logout(close)}>
+          <button
+            type="button"
+            className="menu-item text-red-600 dark:text-red-400"
+            role="menuitem"
+            onClick={() => logout(close)}
+          >
             <LogOut className="size-4" /> Sign out
           </button>
         </div>

@@ -14,12 +14,25 @@ import { LabelPill } from './LabelPill'
 import { PriorityFlag } from './PriorityFlag'
 import { TaskCheckbox } from './TaskCheckbox'
 
-export function TaskItem({ task, hideCategory = false, hideDue = false }: { task: Task; hideCategory?: boolean; hideDue?: boolean }) {
+export function TaskItem({
+  task,
+  hideCategory = false,
+  hideDue = false,
+}: {
+  task: Task
+  hideCategory?: boolean
+  hideDue?: boolean
+}) {
   const actions = useTaskActions()
   const isOpen = useUi((s) => s.openTaskId === task.id)
   const done = task.status === 'done'
   const hasMeta =
-    (!hideDue && task.due_date) || task.subtasks_count || (!hideCategory && task.category) || task.labels?.length || task.description || task.remind_at
+    (!hideDue && task.due_date) ||
+    task.subtasks_count ||
+    (!hideCategory && task.category) ||
+    task.labels?.length ||
+    task.description ||
+    task.remind_at
 
   return (
     <div
@@ -42,13 +55,17 @@ export function TaskItem({ task, hideCategory = false, hideDue = false }: { task
           <p
             className={cn(
               'min-w-0 truncate text-[14px] leading-6 transition-colors',
-              done ? 'text-zinc-400 line-through decoration-zinc-300 dark:text-zinc-500 dark:decoration-zinc-600' : 'text-zinc-800 dark:text-zinc-100',
+              done
+                ? 'text-zinc-400 line-through decoration-zinc-300 dark:text-zinc-500 dark:decoration-zinc-600'
+                : 'text-zinc-800 dark:text-zinc-100',
             )}
           >
             {task.title}
           </p>
           {task.status === 'in_progress' && (
-            <span className="chip h-5 shrink-0 rounded-full bg-amber-500/10 px-2 text-[11px] text-amber-700 dark:text-amber-400">In progress</span>
+            <span className="chip h-5 shrink-0 rounded-full bg-amber-500/10 px-2 text-[11px] text-amber-700 dark:text-amber-400">
+              In progress
+            </span>
           )}
         </div>
         {!!hasMeta && (
@@ -66,7 +83,9 @@ export function TaskItem({ task, hideCategory = false, hideDue = false }: { task
             )}
             {task.description && <AlignLeft className="size-3.5 text-zinc-400" aria-label="Has description" />}
             {task.remind_at && <Bell className="size-3.5 text-zinc-400" aria-label="Has reminder" />}
-            {task.labels?.map((l) => <LabelPill key={l.id} label={l} />)}
+            {task.labels?.map((l) => (
+              <LabelPill key={l.id} label={l} />
+            ))}
             {!hideCategory && task.category && (
               <span className="inline-flex items-center gap-1 text-xs text-zinc-500">
                 <CategoryIcon name={task.category.icon} className={cn('size-3.5', colorOf(task.category.color).text)} />
@@ -85,7 +104,10 @@ export function TaskItem({ task, hideCategory = false, hideDue = false }: { task
           trigger={({ toggle, open }) => (
             <button
               type="button"
-              className={cn('btn-icon size-7 opacity-0 group-hover:opacity-100 focus-visible:opacity-100 max-md:opacity-100', open && 'opacity-100')}
+              className={cn(
+                'btn-icon size-7 opacity-0 group-hover:opacity-100 focus-visible:opacity-100 max-md:opacity-100',
+                open && 'opacity-100',
+              )}
               aria-label="Task options"
               onClick={(e) => {
                 e.stopPropagation()
@@ -104,19 +126,35 @@ export function TaskItem({ task, hideCategory = false, hideDue = false }: { task
             }
             return (
               <div onClick={(e) => e.stopPropagation()}>
-                <p className="px-2.5 pt-1 pb-1.5 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">Due</p>
-                <button type="button" className="menu-item" onClick={act(() => actions.update(task, { due_date: dates[0].value }, 'Moved to today'))}>
+                <p className="px-2.5 pt-1 pb-1.5 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
+                  Due
+                </p>
+                <button
+                  type="button"
+                  className="menu-item"
+                  onClick={act(() => actions.update(task, { due_date: dates[0].value }, 'Moved to today'))}
+                >
                   <Sun className="size-4 text-green-500" /> Today
                 </button>
-                <button type="button" className="menu-item" onClick={act(() => actions.update(task, { due_date: dates[1].value }, 'Moved to tomorrow'))}>
+                <button
+                  type="button"
+                  className="menu-item"
+                  onClick={act(() => actions.update(task, { due_date: dates[1].value }, 'Moved to tomorrow'))}
+                >
                   <Sunrise className="size-4 text-amber-500" /> Tomorrow
                 </button>
                 {task.due_date && (
-                  <button type="button" className="menu-item" onClick={act(() => actions.update(task, { due_date: null, due_time: null }))}>
+                  <button
+                    type="button"
+                    className="menu-item"
+                    onClick={act(() => actions.update(task, { due_date: null, due_time: null }))}
+                  >
                     <CalendarX2 className="size-4 text-zinc-400" /> No date
                   </button>
                 )}
-                <p className="px-2.5 pt-2 pb-1.5 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">Priority</p>
+                <p className="px-2.5 pt-2 pb-1.5 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
+                  Priority
+                </p>
                 <div className="flex gap-1 px-1.5 pb-1.5">
                   {PRIORITIES.map((p) => (
                     <button
@@ -124,7 +162,8 @@ export function TaskItem({ task, hideCategory = false, hideDue = false }: { task
                       type="button"
                       className={cn(
                         'flex h-8 flex-1 items-center justify-center rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800',
-                        task.priority === p.value && 'bg-zinc-100 ring-1 ring-zinc-200 dark:bg-zinc-800 dark:ring-zinc-700',
+                        task.priority === p.value &&
+                          'bg-zinc-100 ring-1 ring-zinc-200 dark:bg-zinc-800 dark:ring-zinc-700',
                       )}
                       aria-label={p.label}
                       title={p.label}
@@ -135,7 +174,11 @@ export function TaskItem({ task, hideCategory = false, hideDue = false }: { task
                   ))}
                 </div>
                 <div className="my-1 h-px bg-zinc-100 dark:bg-zinc-800" />
-                <button type="button" className="menu-item text-red-600 dark:text-red-400" onClick={act(() => actions.remove(task))}>
+                <button
+                  type="button"
+                  className="menu-item text-red-600 dark:text-red-400"
+                  onClick={act(() => actions.remove(task))}
+                >
                   <Trash2 className="size-4" /> Delete
                 </button>
               </div>

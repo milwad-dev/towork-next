@@ -4,7 +4,15 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useSyncExternalStore } from 'react'
 import { openQuickAdd, setSidebarCollapsed, uiStore } from '@/lib/ui'
 
-const GO: Record<string, string> = { t: '/today', u: '/upcoming', a: '/tasks', b: '/board', c: '/calendar', d: '/dashboard', s: '/settings' }
+const GO: Record<string, string> = {
+  t: '/today',
+  u: '/upcoming',
+  a: '/tasks',
+  b: '/board',
+  c: '/calendar',
+  d: '/dashboard',
+  s: '/settings',
+}
 
 export function isTyping(target: EventTarget | null): boolean {
   const el = target as HTMLElement | null

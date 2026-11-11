@@ -18,7 +18,9 @@ export default function AuthLayout({ children }: LayoutProps<'/'>) {
         <Link href="/" className="w-fit rounded-lg">
           <Logo />
         </Link>
-        <main className="mx-auto flex w-full max-w-sm flex-1 animate-fade-in flex-col justify-center py-10">{children}</main>
+        <main className="mx-auto flex w-full max-w-sm flex-1 animate-fade-in flex-col justify-center py-10">
+          {children}
+        </main>
         <p className="text-center text-xs text-zinc-400 dark:text-zinc-500">
           ToWork is free and open source ·{' '}
           <a
@@ -41,16 +43,22 @@ export default function AuthLayout({ children }: LayoutProps<'/'>) {
         <div className="pointer-events-none absolute -bottom-40 -left-24 size-[26rem] rounded-full bg-indigo-300/20 blur-3xl" />
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.07]"
-          style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '22px 22px' }}
+          style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
+            backgroundSize: '22px 22px',
+          }}
         />
 
         <div className="relative">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-medium ring-1 ring-white/20">
             <Sparkles className="size-3.5" /> Version 1.0
           </span>
-          <h2 className="mt-6 max-w-md text-4xl leading-tight font-semibold tracking-tight">Calm, focused task management for people who ship.</h2>
+          <h2 className="mt-6 max-w-md text-4xl leading-tight font-semibold tracking-tight">
+            Calm, focused task management for people who ship.
+          </h2>
           <p className="mt-4 max-w-md text-[15px] text-indigo-100/90">
-            Plan your day, organize projects, and track progress with lists, a Kanban board, and a calendar, all in one place.
+            Plan your day, organize projects, and track progress with lists, a Kanban board, and a calendar, all in one
+            place.
           </p>
         </div>
 
@@ -75,7 +83,9 @@ export default function AuthLayout({ children }: LayoutProps<'/'>) {
                 >
                   {t.done && <Check className="size-3 text-white" strokeWidth={3} />}
                 </span>
-                <span className={cn('flex-1 truncate text-[13px]', t.done && 'text-zinc-400 line-through')}>{t.title}</span>
+                <span className={cn('flex-1 truncate text-[13px]', t.done && 'text-zinc-400 line-through')}>
+                  {t.title}
+                </span>
                 {t.flag && <Flag className="size-3.5 text-red-500" />}
                 {t.due && <span className="text-xs font-medium text-indigo-600">{t.due}</span>}
                 <span className="flex items-center gap-1.5 text-xs text-zinc-500">

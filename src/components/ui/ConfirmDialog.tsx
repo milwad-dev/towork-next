@@ -17,7 +17,12 @@ export function ConfirmDialog() {
           <button type="button" className="btn btn-secondary" onClick={() => resolveConfirm(false)}>
             Cancel
           </button>
-          <button type="button" className={`btn ${state.danger ? 'btn-danger' : 'btn-primary'}`} data-autofocus onClick={() => resolveConfirm(true)}>
+          <button
+            type="button"
+            className={`btn ${state.danger ? 'btn-danger' : 'btn-primary'}`}
+            data-autofocus
+            onClick={() => resolveConfirm(true)}
+          >
             {state.confirmLabel}
           </button>
         </>

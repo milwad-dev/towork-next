@@ -70,7 +70,9 @@ export function DuePicker({
                 }}
               >
                 <Icon className="size-4 text-zinc-400" /> {o.label}
-                <span className="ml-auto text-xs text-zinc-400">{formatDue(o.value) === o.label ? '' : formatDue(o.value)}</span>
+                <span className="ml-auto text-xs text-zinc-400">
+                  {formatDue(o.value) === o.label ? '' : formatDue(o.value)}
+                </span>
               </button>
             )
           })}

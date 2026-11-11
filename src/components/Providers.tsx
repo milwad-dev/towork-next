@@ -16,7 +16,8 @@ export function Providers({ children }: { children: ReactNode }) {
             staleTime: 15_000,
             refetchOnWindowFocus: true,
             // Don't retry client errors (401/403/404/422).
-            retry: (count, error) => !(error instanceof ApiError && error.status >= 400 && error.status < 500) && count < 2,
+            retry: (count, error) =>
+              !(error instanceof ApiError && error.status >= 400 && error.status < 500) && count < 2,
           },
         },
       }),

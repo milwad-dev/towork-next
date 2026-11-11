@@ -1,7 +1,15 @@
 import { useId } from 'react'
 import { cn } from '@/lib/cn'
 
-export function Logo({ size = 'size-7', withText = true, textClass = 'text-[15px]' }: { size?: string; withText?: boolean; textClass?: string }) {
+export function Logo({
+  size = 'size-7',
+  withText = true,
+  textClass = 'text-[15px]',
+}: {
+  size?: string
+  withText?: boolean
+  textClass?: string
+}) {
   // Unique per instance: a hidden copy (e.g. the desktop sidebar on mobile) would
   // otherwise own a shared gradient id and the visible logo would render blank.
   const gradientId = `towork-logo-${useId().replace(/:/g, '')}`
@@ -15,7 +23,14 @@ export function Logo({ size = 'size-7', withText = true, textClass = 'text-[15px
           </linearGradient>
         </defs>
         <rect width="64" height="64" rx="16" fill={`url(#${gradientId})`} />
-        <path d="M19 33.5l8.5 8.5L45 23" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="M19 33.5l8.5 8.5L45 23"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
       {withText && <span className={cn('font-semibold tracking-tight', textClass)}>ToWork</span>}
     </span>

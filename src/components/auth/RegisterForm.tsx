@@ -15,7 +15,8 @@ export function RegisterForm() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', password_confirmation: '' })
   const { errors, setErrors, error, loading, run } = useFormErrors()
   const strength = passwordStrength(form.password)
-  const set = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, [key]: e.target.value })
+  const set = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
+    setForm({ ...form, [key]: e.target.value })
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -46,27 +47,65 @@ export function RegisterForm() {
 
       <form className="mt-8 space-y-4" noValidate onSubmit={submit}>
         <FormField label="Full name" error={errors.name}>
-          {(f) => <input {...f} className="input" autoComplete="name" placeholder="Jane Doe" autoFocus value={form.name} onChange={set('name')} />}
+          {(f) => (
+            <input
+              {...f}
+              className="input"
+              autoComplete="name"
+              placeholder="Jane Doe"
+              autoFocus
+              value={form.name}
+              onChange={set('name')}
+            />
+          )}
         </FormField>
         <FormField label="Email" error={errors.email}>
           {(f) => (
-            <input {...f} className="input" type="email" autoComplete="email" placeholder="you@example.com" value={form.email} onChange={set('email')} />
+            <input
+              {...f}
+              className="input"
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              value={form.email}
+              onChange={set('email')}
+            />
           )}
         </FormField>
         <FormField label="Phone (optional)" error={errors.phone} hint="Lets you sign in with your phone number too.">
-          {(f) => <input {...f} className="input" type="tel" autoComplete="tel" placeholder="+1 555 000 1234" value={form.phone} onChange={set('phone')} />}
+          {(f) => (
+            <input
+              {...f}
+              className="input"
+              type="tel"
+              autoComplete="tel"
+              placeholder="+1 555 000 1234"
+              value={form.phone}
+              onChange={set('phone')}
+            />
+          )}
         </FormField>
         <FormField label="Password" error={errors.password}>
           {(f) => (
             <>
-              <input {...f} className="input" type="password" autoComplete="new-password" value={form.password} onChange={set('password')} />
+              <input
+                {...f}
+                className="input"
+                type="password"
+                autoComplete="new-password"
+                value={form.password}
+                onChange={set('password')}
+              />
               {form.password && (
                 <div className="mt-2 flex items-center gap-2" aria-live="polite">
                   <div className="flex flex-1 gap-1">
                     {[1, 2, 3, 4].map((i) => (
                       <span
                         key={i}
-                        className={cn('h-1 flex-1 rounded-full transition-colors', i <= strength ? STRENGTH_COLORS[strength] : 'bg-zinc-200 dark:bg-zinc-800')}
+                        className={cn(
+                          'h-1 flex-1 rounded-full transition-colors',
+                          i <= strength ? STRENGTH_COLORS[strength] : 'bg-zinc-200 dark:bg-zinc-800',
+                        )}
                       />
                     ))}
                   </div>

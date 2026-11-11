@@ -96,7 +96,11 @@ export function Popover({
       </div>
       {open &&
         createPortal(
-          <div ref={panelRef} className={cn('popover fixed z-[70] max-h-[min(24rem,80vh)] overflow-y-auto scrollbar-thin', width)} style={style}>
+          <div
+            ref={panelRef}
+            className={cn('popover fixed z-[70] max-h-[min(24rem,80vh)] overflow-y-auto scrollbar-thin', width)}
+            style={style}
+          >
             {children({ close })}
           </div>,
           document.body,

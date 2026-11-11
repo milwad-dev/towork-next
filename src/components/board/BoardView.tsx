@@ -14,7 +14,13 @@ import {
   type DragOverEvent,
   type DragStartEvent,
 } from '@dnd-kit/core'
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { AlignLeft, Kanban, ListChecks, Plus, Search } from 'lucide-react'
 import { useMemo, useRef, useState } from 'react'
@@ -108,14 +114,17 @@ export function BoardView() {
       if (col && col === columnOf(final, over.id)) {
         const oldIndex = final[col].findIndex((t) => t.id === active.id)
         const newIndex = final[col].findIndex((t) => t.id === over.id)
-        if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex) final = { ...final, [col]: arrayMove(final[col], oldIndex, newIndex) }
+        if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex)
+          final = { ...final, [col]: arrayMove(final[col], oldIndex, newIndex) }
       }
     }
 
     const before = startColumns.current
     const changed =
       !before ||
-      (Object.keys(final) as TaskStatus[]).some((k) => final[k].map((t) => t.id).join() !== before[k].map((t) => t.id).join())
+      (Object.keys(final) as TaskStatus[]).some(
+        (k) => final[k].map((t) => t.id).join() !== before[k].map((t) => t.id).join(),
+      )
     if (!changed) {
       setDragColumns(null)
       return
@@ -138,14 +147,27 @@ export function BoardView() {
         </div>
         <div className="mr-auto">
           <h1 className="text-2xl font-semibold tracking-tight">Board</h1>
-          <p className="text-[13px] text-zinc-500 dark:text-zinc-400">Drag cards between columns to update their status.</p>
+          <p className="text-[13px] text-zinc-500 dark:text-zinc-400">
+            Drag cards between columns to update their status.
+          </p>
         </div>
         <label className="relative w-full sm:w-56">
           <span className="sr-only">Search</span>
           <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-zinc-400" />
-          <input value={search} onChange={(e) => setSearch(e.target.value)} type="search" className="input h-9 pl-9 text-[13px]" placeholder="Search…" />
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            type="search"
+            className="input h-9 pl-9 text-[13px]"
+            placeholder="Search…"
+          />
         </label>
-        <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} className="input h-9 w-full text-[13px] sm:w-44" aria-label="Filter by category">
+        <select
+          value={categoryId}
+          onChange={(e) => setCategoryId(e.target.value)}
+          className="input h-9 w-full text-[13px] sm:w-44"
+          aria-label="Filter by category"
+        >
           <option value="">All categories</option>
           <option value="none">No category</option>
           {categories.map((c) => (
@@ -229,7 +251,13 @@ function Column({ status, tasks, onToggle }: { status: TaskStatus; tasks: Task[]
   const { setNodeRef, isOver } = useDroppable({ id: status })
   return (
     <SortableContext id={status} items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
-      <div ref={setNodeRef} className={cn('flex min-h-32 flex-1 flex-col gap-2 rounded-xl transition-colors', isOver && !tasks.length && 'bg-accent-500/5')}>
+      <div
+        ref={setNodeRef}
+        className={cn(
+          'flex min-h-32 flex-1 flex-col gap-2 rounded-xl transition-colors',
+          isOver && !tasks.length && 'bg-accent-500/5',
+        )}
+      >
         {tasks.map((t) => (
           <SortableCard key={t.id} task={t} onToggle={onToggle} />
         ))}
@@ -278,7 +306,9 @@ function Card({ task: t, overlay = false, onToggle }: { task: Task; overlay?: bo
         <div className="mt-0.5" onPointerDown={(e) => e.stopPropagation()}>
           <TaskCheckbox checked={done} priority={t.priority} onToggle={() => onToggle?.(t)} />
         </div>
-        <p className={cn('min-w-0 flex-1 text-[13px] leading-5 font-medium', done && 'text-zinc-400 line-through')}>{t.title}</p>
+        <p className={cn('min-w-0 flex-1 text-[13px] leading-5 font-medium', done && 'text-zinc-400 line-through')}>
+          {t.title}
+        </p>
         {t.priority > 1 && <PriorityFlag priority={t.priority} className="mt-0.5 size-3.5" />}
       </div>
       {!!t.labels?.length && (
@@ -299,7 +329,8 @@ function Card({ task: t, overlay = false, onToggle }: { task: Task; overlay?: bo
           {t.description && <AlignLeft className="size-3.5 text-zinc-400" />}
           {t.category && (
             <span className="ml-auto inline-flex items-center gap-1 text-xs text-zinc-500">
-              <CategoryIcon name={t.category.icon} className={cn('size-3.5', colorOf(t.category.color).text)} /> {t.category.name}
+              <CategoryIcon name={t.category.icon} className={cn('size-3.5', colorOf(t.category.color).text)} />{' '}
+              {t.category.name}
             </span>
           )}
         </div>

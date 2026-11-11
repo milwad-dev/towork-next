@@ -1,0 +1,19 @@
+# ToWork (Next.js): `docker compose up -d --build`, then open http://localhost:3001
+# Start towork-backend first; it serves the API on port 8000.
+# Settings are read from TOWORK_* variables (shell or .env), see .env.example.
+name: towork-next
+
+services:
+  web:
+    build: .
+    image: towork-next:1.0.0
+    restart: unless-stopped
+    ports:
+      - "${TOWORK_NEXT_PORT:-3001}:3000"
+    environment:
+      # Server-side only: the browser never talks to the API directly.
+      API_URL: ${TOWORK_API_URL:-http://host.docker.internal:8000/api/v1}
+      # Set to "true" when served over HTTPS behind a proxy that hides it.
+      COOKIE_SECURE: ${TOWORK_COOKIE_SECURE:-false}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
